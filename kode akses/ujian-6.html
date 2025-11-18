@@ -1,32 +1,156 @@
-<!-- UJIAN-6.HTML -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ujian 6 Desember 2025</title>
+<title>SMK PUTERA UTAMA KEPUNG - Ujian 6 Desember</title>
+<link rel="icon" type="image/x-icon" href="../images/logo PU.png">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<style>.logo-bg{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:420px;opacity:0.04}</style>
+
+<style>
+  /* === BACKGROUND PATTERN LOGO === */
+  body {
+    background: #f4f6f9;
+    min-height: auto;
+    position: relative;
+    overflow-x: hidden;
+
+    background-image: url("../images/logo PU.png");
+    background-size: 180px 180px;
+    background-repeat: repeat;
+    background-position: center;
+  }
+
+  /* OVERLAY PUTIH SUPAYA TEKS JELAS */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(255,255,255,0.85);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* JUDUL TENGAH */
+  .title-header {
+    text-align: center;
+    font-size: 60px;
+    font-weight: 900;
+    color: #003366;
+    letter-spacing: 1.5px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    z-index: 10;
+    position: relative;
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.15);
+  }
+
+  .card {
+    position: relative;
+    z-index: 10;
+  }
+</style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary"><div class="container"><a class="navbar-brand">SMK PUTERA UTAMA KEPUNG</a></div></nav>
-<img src="logo.png" class="logo-bg" alt="Logo">
-<div class="container py-5">
+
+<!-- JUDUL UTAMA -->
+<h1 class="title-header">SMK PUTERA UTAMA KEPUNG</h1>
+
+<div class="container py-4">
   <div class="row justify-content-center">
     <div class="col-md-8">
-      <div class="card shadow">
+      <div class="card shadow-lg">
         <div class="card-body text-center">
-          <h2>Ujian - 6 Desember 2025</h2>
-          <p class="text-muted">Pilih mata pelajaran di bawah</p>
-          <div class="d-grid gap-2">
-            <a class="btn btn-danger btn-lg" href="#">Fisika</a>
-            <a class="btn btn-danger btn-lg" href="#">Kimia</a>
-            <a class="btn btn-secondary btn-lg" href="#">Seni Budaya</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+
+          <!-- JUDUL -->
+        <h2 class="fw-bold mb-3">Ujian Semester Ganjil <br>TH. 2024/2025</h2>
+        <h4 class="fw-bold mb-3" style="color: rgb(255, 3, 3);">Sabtu, 6 Desember 2025</h4>
+
+          <!-- === PILIHAN KELAS === -->
+<div id="pilihKelas" class="d-grid gap-3">
+  <p class="text-muted mb-4">Silakan pilih kelas terlebih dahulu</p>
+  <button class="btn btn-warning btn-lg" onclick="tampilMapel('10')">Kelas 10</button>
+  <button class="btn btn-info btn-lg" onclick="tampilMapel('11')">Kelas 11</button>
+  <button class="btn btn-dark btn-lg" onclick="tampilMapel('12')">Kelas 12</button>
 </div>
+
+<!-- === BLOK MAPEL / SOAL PER KELAS === -->
+<div id="daftarMapel" class="d-none mt-4">
+    
+    <h3 id="judulMapel" class="fw-bold mb-3"></h3>
+    <p class="text-muted">Silakan pilih mata pelajaran:</p>
+
+    <!-- CONTAINER MAPEL -->
+    <div id="blokSoal" class="d-grid gap-3"></div>
+
+    <!-- Tombol kembali -->
+    <button class="btn btn-outline-danger btn-lg mt-4" onclick="kembali()">
+      Kembali ke Pilihan Kelas
+    </button>
+
+</div>
+
+
+<script>
+/* -------- DATA MAPEL PER KELAS -------- */
+const soalKelas = {
+
+  "10": [
+    { nama: "Bahasa Indonesia", link: "#" },
+    { nama: "Matematika", link: "#" },
+    { nama: "IPAS", link: "#" },
+    { nama: "Pendidikan Pancasila", link: "#" }
+  ],
+
+  "11": [
+    { nama: "Bahasa Inggris", link: "#" },
+    { nama: "Simkomdig", link: "#" },
+    { nama: "Produktif TKR", link: "#" },
+    { nama: "Penjas", link: "#" }
+  ],
+
+  "12": [
+    { nama: "PKK", link: "#" },
+    { nama: "Produktif TBSM", link: "#" },
+    { nama: "Matematika Peminatan", link: "#" },
+    { nama: "Sejarah Indonesia", link: "#" }
+  ]
+
+};
+
+
+/* -------- FUNGSI TAMPILKAN MAPEL -------- */
+function tampilMapel(kelas) {
+
+  // sembunyikan menu kelas
+  document.getElementById("pilihKelas").classList.add("d-none");
+
+  // tampilkan blok mapel
+  document.getElementById("daftarMapel").classList.remove("d-none");
+
+  // tampilkan judul per kelas
+  document.getElementById("judulMapel").innerHTML =
+      "Daftar Mapel Kelas " + kelas;
+
+  // tampilkan mapel sesuai kelas
+  let blok = document.getElementById("blokSoal");
+  blok.innerHTML = ""; // reset
+
+  soalKelas[kelas].forEach((m) => {
+    blok.innerHTML += `
+      <a class="btn btn-primary btn-lg" href="${m.link}">
+        ${m.nama}
+      </a>
+    `;
+  });
+
+}
+
+/* -------- FUNGSI KEMBALI -------- */
+function kembali() {
+  document.getElementById("daftarMapel").classList.add("d-none");
+  document.getElementById("pilihKelas").classList.remove("d-none");
+}
+</script>
 </body>
 </html>
